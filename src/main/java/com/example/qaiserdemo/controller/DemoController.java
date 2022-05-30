@@ -49,4 +49,18 @@ public class DemoController {
         personRepository.deleteById(id);
         return 1;
     }
+
+    @PutMapping(path = "/person/{id}", produces= MediaType.APPLICATION_JSON_VALUE)
+    private Person updatePerson(@PathVariable("id") int id, @RequestBody Person inPerson) {
+
+        Optional<Person> person = personRepository.findById(id);
+        person.get().setAge(inPerson.getAge());
+        person.get().setEmail(inPerson.getEmail());
+        person.get().setName(inPerson.getName());
+
+
+        Person p = personRepository.save(person.get());
+        return p;
+
+    }
 }

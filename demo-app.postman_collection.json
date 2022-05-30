@@ -138,14 +138,14 @@
 			"response": []
 		},
 		{
-			"name": "Createnames",
+			"name": "UpdatePerson",
 			"protocolProfileBehavior": {
 				"disabledSystemHeaders": {
 					"accept": true
 				}
 			},
 			"request": {
-				"method": "POST",
+				"method": "PUT",
 				"header": [
 					{
 						"key": "Accept",
@@ -155,7 +155,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "rashid",
+					"raw": "\r\n{\r\n \"name\": \"John\",\r\n \"age\": 30,\r\n \"email\": \"John@aol.com\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -163,14 +163,15 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/save",
+					"raw": "http://localhost:8080/person/1",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"save"
+						"person",
+						"1"
 					]
 				}
 			},
