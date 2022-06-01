@@ -1,0 +1,42 @@
+[
+  {
+    "name": "John",
+    "age": 30,
+    "email": "john@aol.com"
+  },
+  {
+    "name": "David",
+    "age": 25,
+    "email": "david@aol.com"
+  },
+  {
+    "name": "Mike",
+    "age": 35,
+    "email": "mike@aol.com"
+  },
+  {
+    "name": "Alfred",
+    "age": 25,
+    "email": "alfred@aol.com"
+  },
+  {
+    "name": "Robert",
+    "age": 30,
+    "email": "robert@aol.com"
+  },
+  {
+    "name": "James",
+    "age": 25,
+    "email": "james@aol.com"
+  },
+  {
+    "name": "Jennie",
+    "age": 35,
+    "email": "jennie@aol.com"
+  },
+  {
+    "name": "Amber",
+    "age": 25,
+    "email": "amber@aol.com"
+  }
+]
