@@ -3,6 +3,7 @@ package com.example.qaiserdemo.controller;
 import com.example.qaiserdemo.domain.Person;
 import com.example.qaiserdemo.service.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -18,8 +19,12 @@ public class DemoController {
     @Autowired
     PersonRepository personRepository;
 
-    @GetMapping("/qaiserdemo")
+    @Value("${spring.application.name}")
+    private String name;
+
+    @GetMapping("/demo")
     private String index() {
+        System.out.println(name);
         return "Hello World!";
     }
 
