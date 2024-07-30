@@ -4,9 +4,10 @@ import requests
 
 
 def update_person(id):
-    url = "http://localhost:8080/person/" + str(id)
+    url = "http://localhost:8080/person"
 
     payload = json.dumps({
+        "id":2,
         "name": "John",
         "age": 30,
         "email": "John@aol.com"

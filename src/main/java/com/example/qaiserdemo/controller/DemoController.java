@@ -1,13 +1,15 @@
 package com.example.qaiserdemo.controller;
 
 import com.example.qaiserdemo.domain.Person;
-import com.example.qaiserdemo.service.PersonRepository;
+import com.example.qaiserdemo.service.BusinessService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,9 +17,10 @@ import java.util.Optional;
 @RestController
 public class DemoController {
 
+    Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
-    PersonRepository personRepository;
+    BusinessService businessService;
 
     @Value("${spring.application.name}")
     private String name;
@@ -25,13 +28,15 @@ public class DemoController {
     @GetMapping("/demo")
     private String index() {
         System.out.println(name);
+        logger.info(String.format("calling method %s ", Thread.currentThread().getStackTrace()[1].getMethodName()));
         return "Hello World!";
     }
 
     @PostMapping("/person")
     private int savePerson(@RequestBody Person person) {
 
-        Person p = personRepository.save(person);
+        logger.info(String.format("calling method %s with person %s ", Thread.currentThread().getStackTrace()[1].getMethodName(), person.toString()));
+        Person p = businessService.savePerson(person);
         return p.getId();
 
     }
@@ -39,32 +44,35 @@ public class DemoController {
     @GetMapping("/persons")
     private List<Person> getAllPerson() {
 
-        return (List<Person>)personRepository.findAll();
+        logger.info(String.format("calling method %s ", Thread.currentThread().getStackTrace()[1].getMethodName()));
+        return businessService.findAllPersons();
 
     }
 
-    @GetMapping(path = "/person/{id}", produces= MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(path = "/person/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     private ResponseEntity<Person> getPersonById(@PathVariable("id") int id) {
-        Optional<Person> person = personRepository.findById(id);
+        logger.info(String.format("calling method %s with id %d ", Thread.currentThread().getStackTrace()[1].getMethodName(), id));
+        Optional<Person> person = businessService.getPersonById(id);
         return new ResponseEntity<Person>(person.get(), HttpStatus.OK);
     }
 
     @DeleteMapping("/person/{id}")
     private int deletePerson(@PathVariable("id") int id) {
-        personRepository.deleteById(id);
-        return 1;
+        logger.info(String.format("calling method %s with id %d ", Thread.currentThread().getStackTrace()[1].getMethodName(), id));
+        return businessService.deletePersonById(id);
     }
 
-    @PutMapping(path = "/person/{id}", produces= MediaType.APPLICATION_JSON_VALUE)
-    private Person updatePerson(@PathVariable("id") int id, @RequestBody Person inPerson) {
+    @PutMapping(path = "/person", produces = MediaType.APPLICATION_JSON_VALUE)
+    private Person updatePerson(@RequestBody Person inPerson) {
+//        logger.info(String.format("calling method %s with id %d and person %s", Thread.currentThread().getStackTrace()[1].getMethodName(),inPerson.toString()));
 
-        Optional<Person> person = personRepository.findById(id);
+        Optional<Person> person = businessService.getPersonById(inPerson.getId());
         person.get().setAge(inPerson.getAge());
         person.get().setEmail(inPerson.getEmail());
         person.get().setName(inPerson.getName());
 
 
-        Person p = personRepository.save(person.get());
+        Person p =  businessService.savePerson(person.get());
         return p;
 
     }

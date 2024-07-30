@@ -40,9 +40,13 @@
 `spring.profiles.active=dev`
 
 ### from command line
-
 `java -jar -Dspring.profiles.active=dev target/qaiserdemo-0.0.1.jar`
 
-### from mvn command line
+## on windows
+`java -jar '-Dspring.profiles.active=dev' target/qaiserdemo-0.0.1.jar`
 
+### from mvn command line
 `mvn spring-boot:run -Dspring-boot.run.profiles=dev`
+
+## on windows
+`mvn spring-boot:run '-Dspring-boot.run.profiles=dev'`
